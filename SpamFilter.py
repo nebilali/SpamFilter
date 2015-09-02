@@ -3,10 +3,6 @@
 # Date: Friday, March 6, 2015
 # Desc: Rudementary Spam filter using bag of words
 ############################################################
-
-student_name = "Nebil Ali"
-
-############################################################
 # Imports
 ############################################################
 
@@ -33,9 +29,11 @@ def load_tokens(email_path):
 #returns log of probabilities of unique tokens in emails
 def log_probs(email_paths, smoothing):
     superList = []
-    Pw = {}
+    
+    Pw = {} #probability of words
     superList = [token for email in email_paths for token in load_tokens(email)]
-    V = set(superList)
+    V = set(superList) #set,V, of all words
+
     lenCount = len(superList)
     lenV = len(V)
     cnt = Counter(superList)
@@ -54,7 +52,7 @@ class SpamFilter(object):
         
         self.spamDic = log_probs(spam_emails,smoothing)
         self.hamDic = log_probs(ham_emails,smoothing)
-        self.a = smoothing
+        self.a = smoothing #smoothing constant
         self.inter = set(self.spamDic.keys()).intersection(set(self.hamDic.keys()))
 
         spamNum = float(len(spam_emails))
